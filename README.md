@@ -11,7 +11,7 @@ A production-ready full-stack Order Management System built with **Node.js**, **
 4. [Order Status Flow](#-order-status-flow)
 5. [Scheduler & Background Tasks](#-scheduler--background-tasks)
 6. [API Documentation](#-api-documentation)
-7. [Deployment Guide](#-deployment-guide)
+
 
 ---
 
