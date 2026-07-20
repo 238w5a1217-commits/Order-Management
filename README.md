@@ -149,7 +149,3 @@ A complete Postman collection is included in the repository (`postman_collection
 - `POST /api/scheduler/run` - Trigger scheduler manually (requires `x-secret-key`)
 - `GET /api/scheduler/logs` - View scheduler logs (requires `x-secret-key`)
 
----
-   ```
-3. Set the environment variables in your cloud provider's dashboard (ensure `NODE_ENV=production`).
-4. In production mode, Express automatically serves the built React static files from the `dist` directory.
