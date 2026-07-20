@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { fetchOrders } from '../api/ordersApi.js';
 
-const AUTO_REFRESH_INTERVAL = 30000;
+const AUTO_REFRESH_INTERVAL = 5000;
 
 const useOrders = () => {
   const [orders, setOrders] = useState([]);
