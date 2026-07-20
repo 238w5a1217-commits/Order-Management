@@ -1,6 +1,6 @@
 # Order Management System 🚀
 
-A production-ready full-stack Order Management System built with **Node.js**, **Express.js**, **React (Vite)**, **MongoDB Atlas**, and **node-cron**. The architecture is structured as a robust **Monorepo** with dedicated backend and frontend services.
+A production-ready full-stack Order Management System built with **Node.js**, **Express.js**, **React (Vite)**, **MongoDB Atlas**, and **node-cron**.
 
 ---
 
@@ -21,14 +21,14 @@ A production-ready full-stack Order Management System built with **Node.js**, **
 Ensure you have Node.js (v18+) and npm installed.
 
 ### 2. Installation
-The project uses NPM workspaces to manage dependencies globally. From the root directory:
+From the root directory:
 ```bash
-# Install all dependencies for root, frontend, and backend
-npm run install:all
+# Install all dependencies
+npm install
 ```
 
 ### 3. Environment Setup
-Create or edit the `.env` file located in the `backend/` directory:
+Create or edit the `.env` file located in the root directory:
 ```env
 MONGODB_URI=mongodb+srv://<user>:<password>@cluster.mongodb.net/orderdb
 PORT=3001
@@ -47,27 +47,40 @@ npm run dev
 
 *(Optional)* Seed the database with 30 realistic mock orders:
 ```bash
-cd backend
 npm run seed
 ```
 
 ---
 
 ## 📁 Folder Structure
-The repository is structured as a monorepo for maximum separation of concerns:
+The repository is structured neatly in a unified directory containing both React frontend and Express backend:
 ```text
 order/
-├── backend/               # Node.js + Express API
-│   ├── src/               # Routes, Controllers, Models, Cron, Services
-│   ├── seed.js            # Mock data generator
-│   ├── .env               # Backend secrets
-│   └── package.json       # Backend dependencies
-├── frontend/              # React + Vite UI
-│   ├── src/               # React Components, Pages, Hooks, API layer
-│   ├── index.html         # Application entry
-│   ├── vite.config.js     # Vite configuration
-│   └── package.json       # Frontend dependencies
-├── package.json           # Root workspace manager (concurrently scripts)
+├── src/
+│   ├── components/    # React UI components
+│   ├── pages/         # React page components
+│   ├── hooks/         # Custom React hooks
+│   ├── layouts/       # Page layout wrappers
+│   ├── api/           # Axios API layer
+│   ├── utils/         # Formatting utilities
+│   ├── controllers/   # Express route handlers
+│   ├── routes/        # Express routers
+│   ├── models/        # Mongoose schemas
+│   ├── services/      # Business logic
+│   ├── middlewares/   # Custom Express middleware
+│   ├── validators/    # express-validator rules
+│   ├── cron/          # node-cron job
+│   ├── config/        # DB connection
+│   ├── app.js         # Express app setup
+│   ├── server.js      # Entry point
+│   ├── main.jsx       # React entry point
+│   ├── App.jsx        # React root component
+│   └── index.css      # Tailwind & global styles
+├── seed.js            # DB seed script
+├── .env               # Secrets
+├── index.html         # Vite HTML entry
+├── vite.config.js     # Vite configuration
+├── package.json       # Dependencies & Scripts
 └── README.md
 ```
 
@@ -109,7 +122,7 @@ Every transition is logged with a timestamp and reason inside the `statusHistory
 ## ⏱ Scheduler & Background Tasks
 
 ### Mechanism
-A `node-cron` job runs natively every 5 minutes inside the backend server (`backend/src/cron/orderCron.js`). 
+A `node-cron` job runs natively every 5 minutes inside the backend server (`src/cron/orderCron.js`). 
 It identifies stale orders by querying:
 - `PLACED` orders where `updatedAt < (Now - 10 minutes)`
 - `PROCESSING` orders where `updatedAt < (Now - 20 minutes)`
@@ -137,17 +150,6 @@ A complete Postman collection is included in the repository (`postman_collection
 - `GET /api/scheduler/logs` - View scheduler logs (requires `x-secret-key`)
 
 ---
-
-## 🚀 Deployment Guide
-
-### Cloud Deployment (Render, Heroku, Railway)
-1. Set the root Build Command: 
-   ```bash
-   npm run install:all && npm run build --workspace=frontend
-   ```
-2. Set the root Start Command: 
-   ```bash
-   npm run start --workspace=backend
    ```
 3. Set the environment variables in your cloud provider's dashboard (ensure `NODE_ENV=production`).
-4. In production mode, Express automatically serves the built React static files from `frontend/dist`.
+4. In production mode, Express automatically serves the built React static files from the `dist` directory.
